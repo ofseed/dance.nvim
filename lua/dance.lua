@@ -7,7 +7,9 @@ local M = {}
 ---@type DanceConfig
 M.opts = {}
 
-function M.install()
+--- Install the language server
+---@param prevent_start boolean? whether to start after the installation is completed
+function M.install(prevent_start)
   vim.notify "Installing Pylance..."
   utils
     .system({
@@ -39,6 +41,9 @@ function M.install()
     end)
     :next(function()
       vim.notify "Pylance installed"
+      if not prevent_start then
+        M.start()
+      end
     end)
 end
 
