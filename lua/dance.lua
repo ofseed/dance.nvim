@@ -8,6 +8,7 @@ local M = {}
 M.opts = {}
 
 function M.install()
+  vim.notify "Installing Pylance..."
   utils
     .system({
       "wget",
