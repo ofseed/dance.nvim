@@ -41,8 +41,11 @@ function M.install()
     end)
 end
 
-function M.start(client_config)
-  return vim.lsp.start({
+function M.start(override_config)
+  override_config = override_config or {}
+
+  ---@diagnostic disable-next-line: redefined-local
+  local config = vim.tbl_deep_extend("force", {
     name = "pylance",
     cmd = {
       M.opts.server.runtime,
@@ -50,7 +53,9 @@ function M.start(client_config)
       "--stdio",
     },
     settings = M.opts.settings,
-  }, {})
+  }, override_config)
+
+  return vim.lsp.start(config, {})
 end
 
 ---@param opts DanceConfig | nil
