@@ -28,7 +28,7 @@ function M.setup_auto_start()
 
       ---@diagnostic disable-next-line: param-type-mismatch
       if not vim.uv.fs_stat(dance.opts.server.entry) then
-        vim.notify("No Python language server found", vim.log.levels.WARN)
+        vim.notify("No Python language server found. Try :DanceInstall", vim.log.levels.WARN)
         return
       end
 
