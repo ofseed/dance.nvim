@@ -8,11 +8,11 @@ function M.setup_installation_command()
     desc = "Setup installation command",
     pattern = "python",
     callback = function(args)
-      local dance = require "dance"
+      local installer = require "dance.installer"
       local bufnr = args.buf
 
       vim.api.nvim_buf_create_user_command(bufnr, "DanceInstall", function()
-        dance.install()
+        installer.install()
       end, {})
     end,
   })
