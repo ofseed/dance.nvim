@@ -7,6 +7,7 @@ local M = {}
 
 ---@class DanceConfig
 ---@field server DanceServerConfig
+---@field settings table
 
 function M.get_defaults()
   ---@type DanceConfig
@@ -18,6 +19,15 @@ function M.get_defaults()
       entry = function(server_path)
         return vim.fs.joinpath(server_path, "pylance", "server.bundle.js")
       end,
+    },
+    settings = {
+      python = {
+        analysis = {
+          autoSearchPaths = true,
+          useLibraryCodeForTypes = true,
+          diagnosticMode = "openFilesOnly",
+        },
+      },
     },
   }
   return defaults

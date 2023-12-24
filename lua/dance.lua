@@ -48,15 +48,7 @@ function M.start(client_config)
       M.opts.server.entry,
       "--stdio",
     },
-    settings = {
-      python = {
-        analysis = {
-          autoSearchPaths = true,
-          useLibraryCodeForTypes = true,
-          diagnosticMode = "openFilesOnly",
-        },
-      },
-    },
+    settings = M.opts.settings,
   }, {})
 end
 
