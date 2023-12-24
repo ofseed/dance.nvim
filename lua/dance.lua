@@ -12,27 +12,27 @@ function M.install()
       "wget",
       "https://github.com/mochaaP/pylance-standalone/archive/dist.zip",
       "--directory-prefix",
-      M.opts.path,
+      M.opts.server.path,
     })
     :next(function()
       return utils.system {
         "unzip",
-        M.opts.path .. "/dist.zip",
+        M.opts.server.path .. "/dist.zip",
         "-d",
-        M.opts.path,
+        M.opts.server.path,
       }
     end)
     :next(function()
       return utils.system {
         "mv",
-        M.opts.path .. "/pylance-standalone-dist",
-        M.opts.path .. "/pylance",
+        M.opts.server.path .. "/pylance-standalone-dist",
+        M.opts.server.path .. "/pylance",
       }
     end)
     :next(function()
       return utils.system {
         "rm",
-        M.opts.path .. "/dist.zip",
+        M.opts.server.path .. "/dist.zip",
       }
     end)
     :next(function()
@@ -44,8 +44,8 @@ function M.start(client_config)
   return vim.lsp.start({
     name = "pylance",
     cmd = {
-      "node",
-      M.opts.path .. "/pylance/server.bundle.js",
+      M.opts.server.runtime,
+      M.opts.server.entry,
       "--stdio",
     },
     settings = {
@@ -65,6 +65,9 @@ function M.setup(opts)
   opts = opts or {}
   M.opts = config.get_defaults()
   M.opts = vim.tbl_deep_extend("force", M.opts, opts)
+  if type(M.opts.server.entry) == "function" then
+    M.opts.server.entry = M.opts.server.entry(M.opts.server.path)
+  end
 end
 
 return M
