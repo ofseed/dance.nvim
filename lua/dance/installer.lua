@@ -32,9 +32,9 @@ function M.install(prevent_start)
     end)
     :next(function()
       vim.notify "Pylance installed"
-      if not prevent_start then
-        M.start()
-      end
+      vim.defer_fn(function()
+        dance.start()
+      end, 100)
     end)
 end
 
