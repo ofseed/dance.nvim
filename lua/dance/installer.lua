@@ -26,13 +26,6 @@ function M.install(prevent_start)
     end)
     :next(function()
       return utils.system {
-        "mv",
-        dance.opts.server.path .. "/pylance-standalone-dist",
-        dance.opts.server.path .. "/pylance",
-      }
-    end)
-    :next(function()
-      return utils.system {
         "rm",
         dance.opts.server.path .. "/dist.zip",
       }

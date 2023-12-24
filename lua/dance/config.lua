@@ -22,7 +22,7 @@ function M.get_defaults()
       path = vim.fs.joinpath(vim.fn.stdpath "data", "dance"),
       runtime = "node",
       entry = function(server_path)
-        return vim.fs.joinpath(server_path, "pylance", "server.bundle.js")
+        return vim.fs.joinpath(server_path, "pylance-standalone-dist", "server.bundle.js")
       end,
     },
     capabilities = vim.lsp.protocol.make_client_capabilities(),
