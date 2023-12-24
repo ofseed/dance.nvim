@@ -3,33 +3,36 @@ local utils = require "dance.utils"
 
 local M = {}
 
+---@type DanceConfig
+M.opts = {}
+
 function M.install()
   utils
     .system({
       "wget",
       "https://github.com/mochaaP/pylance-standalone/archive/dist.zip",
       "--directory-prefix",
-      config.path,
+      M.opts.path,
     })
     :next(function()
       return utils.system {
         "unzip",
-        config.path .. "/dist.zip",
+        M.opts.path .. "/dist.zip",
         "-d",
-        config.path,
+        M.opts.path,
       }
     end)
     :next(function()
       return utils.system {
         "mv",
-        config.path .. "/pylance-standalone-dist",
-        config.path .. "/pylance",
+        M.opts.path .. "/pylance-standalone-dist",
+        M.opts.path .. "/pylance",
       }
     end)
     :next(function()
       return utils.system {
         "rm",
-        config.path .. "/dist.zip",
+        M.opts.path .. "/dist.zip",
       }
     end)
     :next(function()
@@ -42,7 +45,7 @@ function M.start(client_config)
     name = "pylance",
     cmd = {
       "node",
-      config.path .. "/pylance/server.bundle.js",
+      M.opts.path .. "/pylance/server.bundle.js",
       "--stdio",
     },
     settings = {
@@ -57,6 +60,11 @@ function M.start(client_config)
   }, {})
 end
 
-function M.setup(opts) end
+---@param opts DanceConfig | nil
+function M.setup(opts)
+  opts = opts or {}
+  M.opts = config.get_defaults()
+  M.opts = vim.tbl_deep_extend("force", M.opts, opts)
+end
 
 return M
