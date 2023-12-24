@@ -53,7 +53,7 @@ function M.start(override_config)
 
   ---@diagnostic disable-next-line: redefined-local
   local config = vim.tbl_deep_extend("force", {
-    name = "pylance",
+    name = M.opts.server.name,
     cmd = {
       M.opts.server.runtime,
       M.opts.server.entry,

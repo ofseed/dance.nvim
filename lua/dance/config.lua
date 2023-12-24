@@ -1,6 +1,7 @@
 local M = {}
 
 ---@class DanceServerConfig
+---@field name string
 ---@field path string
 ---@field runtime "node" | "bun"
 ---@field entry string | fun(server_path: string): string
@@ -15,6 +16,7 @@ function M.get_defaults()
   local defaults = {
     auto_start = true,
     server = {
+      name = "pylance",
       ---@diagnostic disable-next-line: param-type-mismatch
       path = vim.fs.joinpath(vim.fn.stdpath "data", "dance"),
       runtime = "node",
