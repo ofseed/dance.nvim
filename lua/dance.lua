@@ -1,34 +1,40 @@
 local config = require "dance.config"
+local utils = require "dance.utils"
 
 local M = {}
 
 function M.install()
-  vim.system({
-    "wget",
-    "https://github.com/mochaaP/pylance-standalone/archive/dist.zip",
-    "--directory-prefix",
-    config.path,
-  }, {}, function()
-    vim.system({
-      "unzip",
-      config.path .. "/dist.zip",
-      "-d",
+  utils
+    .system({
+      "wget",
+      "https://github.com/mochaaP/pylance-standalone/archive/dist.zip",
+      "--directory-prefix",
       config.path,
-    }, {}, function()
-      vim.system({
+    })
+    :next(function()
+      return utils.system {
+        "unzip",
+        config.path .. "/dist.zip",
+        "-d",
+        config.path,
+      }
+    end)
+    :next(function()
+      return utils.system {
         "mv",
         config.path .. "/pylance-standalone-dist",
         config.path .. "/pylance",
-      }, {}, function()
-        vim.system({
-          "rm",
-          config.path .. "/dist.zip",
-        }, {}, function()
-          vim.print "Pylance installed"
-        end)
-      end)
+      }
     end)
-  end)
+    :next(function()
+      return utils.system {
+        "rm",
+        config.path .. "/dist.zip",
+      }
+    end)
+    :next(function()
+      vim.notify "Pylance installed"
+    end)
 end
 
 function M.start(client_config)
