@@ -77,6 +77,7 @@ function M.setup(opts)
   if M.opts.auto_start then
     autocmds.setup_auto_start()
   end
+  autocmds.setup_installation_command()
 end
 
 return M
