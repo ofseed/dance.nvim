@@ -6,12 +6,14 @@ local M = {}
 ---@field entry string | fun(server_path: string): string
 
 ---@class DanceConfig
+---@field auto_start boolean
 ---@field server DanceServerConfig
 ---@field settings table
 
 function M.get_defaults()
   ---@type DanceConfig
   local defaults = {
+    auto_start = true,
     server = {
       ---@diagnostic disable-next-line: param-type-mismatch
       path = vim.fs.joinpath(vim.fn.stdpath "data", "dance"),

@@ -1,3 +1,4 @@
+local autocmds = require "dance.autocmds"
 local config = require "dance.config"
 local utils = require "dance.utils"
 
@@ -55,10 +56,15 @@ end
 ---@param opts DanceConfig | nil
 function M.setup(opts)
   opts = opts or {}
+
   M.opts = config.get_defaults()
   M.opts = vim.tbl_deep_extend("force", M.opts, opts)
   if type(M.opts.server.entry) == "function" then
     M.opts.server.entry = M.opts.server.entry(M.opts.server.path)
+  end
+
+  if M.opts.auto_start then
+    autocmds.setup_auto_start()
   end
 end
 
