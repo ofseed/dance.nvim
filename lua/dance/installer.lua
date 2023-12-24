@@ -38,4 +38,11 @@ function M.install(prevent_start)
     end)
 end
 
+function M.check()
+  local dance = require "dance"
+
+  ---@diagnostic disable-next-line: param-type-mismatch
+  return vim.uv.fs_stat(dance.opts.server.entry) ~= nil
+end
+
 return M

@@ -1,3 +1,5 @@
+local installer = require "dance.installer"
+
 local M = {}
 
 local group = vim.api.nvim_create_augroup("dance", {})
@@ -8,7 +10,6 @@ function M.setup_installation_command()
     desc = "Setup installation command",
     pattern = "python",
     callback = function(args)
-      local installer = require "dance.installer"
       local bufnr = args.buf
 
       vim.api.nvim_buf_create_user_command(bufnr, "DanceInstall", function()
@@ -26,8 +27,7 @@ function M.setup_auto_start()
     callback = function()
       local dance = require "dance"
 
-      ---@diagnostic disable-next-line: param-type-mismatch
-      if not vim.uv.fs_stat(dance.opts.server.entry) then
+      if not installer.check() then
         vim.notify("No Python language server found. Try :DanceInstall", vim.log.levels.WARN)
         return
       end
