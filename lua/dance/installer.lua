@@ -5,34 +5,36 @@ local M = {}
 --- Install the language server
 ---@param prevent_start boolean? whether to start after the installation is completed
 function M.install(prevent_start)
+  local dance = require "dance"
+
   vim.notify "Installing Pylance..."
   utils
     .system({
       "wget",
       "https://github.com/mochaaP/pylance-standalone/archive/dist.zip",
       "--directory-prefix",
-      M.opts.server.path,
+      dance.opts.server.path,
     })
     :next(function()
       vim.notify "Extracting..."
       return utils.system {
         "unzip",
-        M.opts.server.path .. "/dist.zip",
+        dance.opts.server.path .. "/dist.zip",
         "-d",
-        M.opts.server.path,
+        dance.opts.server.path,
       }
     end)
     :next(function()
       return utils.system {
         "mv",
-        M.opts.server.path .. "/pylance-standalone-dist",
-        M.opts.server.path .. "/pylance",
+        dance.opts.server.path .. "/pylance-standalone-dist",
+        dance.opts.server.path .. "/pylance",
       }
     end)
     :next(function()
       return utils.system {
         "rm",
-        M.opts.server.path .. "/dist.zip",
+        dance.opts.server.path .. "/dist.zip",
       }
     end)
     :next(function()
