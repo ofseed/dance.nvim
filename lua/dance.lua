@@ -51,6 +51,7 @@ end
 function M.start(override_config)
   override_config = override_config or {}
 
+  ---@type lsp.ClientConfig
   ---@diagnostic disable-next-line: redefined-local
   local config = vim.tbl_deep_extend("force", {
     name = M.opts.server.name,
@@ -59,6 +60,7 @@ function M.start(override_config)
       M.opts.server.entry,
       "--stdio",
     },
+    capabilities = M.opts.capabilities,
     settings = M.opts.settings,
   }, override_config)
 

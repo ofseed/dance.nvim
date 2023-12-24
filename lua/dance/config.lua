@@ -9,6 +9,7 @@ local M = {}
 ---@class DanceConfig
 ---@field auto_start boolean
 ---@field server DanceServerConfig
+---@field capabilities lsp.ClientCapabilities
 ---@field settings table
 
 function M.get_defaults()
@@ -24,6 +25,7 @@ function M.get_defaults()
         return vim.fs.joinpath(server_path, "pylance", "server.bundle.js")
       end,
     },
+    capabilities = vim.lsp.protocol.make_client_capabilities(),
     settings = {
       python = {
         analysis = {
