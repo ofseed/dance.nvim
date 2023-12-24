@@ -19,6 +19,7 @@ function M.install(prevent_start)
       M.opts.server.path,
     })
     :next(function()
+      vim.notify "Extracting..."
       return utils.system {
         "unzip",
         M.opts.server.path .. "/dist.zip",
